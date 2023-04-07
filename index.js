@@ -9,7 +9,7 @@ class ProductManager {
         if (this.products.find(producto => producto.code == product.code)) {
             console.log("Existe") // Producto 
         } else {
-            // No existe 
+            this.products.push(product)
         }
     }
 
@@ -22,8 +22,9 @@ class ProductManager {
 
         if (product) { // Si existe
             return product
+        } else {
+            console.log("No existe")
         }
-        console.log("No existe")
     }
 }
 
