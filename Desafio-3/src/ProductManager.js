@@ -17,24 +17,42 @@ export class ProductManager {
     async getProducts() {
         const productTXT = await fs.readFile(this.path, 'utf-8')
 
-        const prods = JSON.parse(productTXT)
+        this.products = JSON.parse(productTXT)
 
-        console.log(prods)
+        return this.products
     }
 
     async getProductById(id) {
         const productTXT = await fs.readFile(this.path, 'utf-8')
-        if (productTXT) {
-            return productTXT
-        }
-        return "Not found"
+        
+        this.products = JSON.parsen(productTXT)
+
+        const productByid = this.products.find((prod) => prod.id === parseInt(id))
+        const result = productByid !== undefined ? productByid : 'Product not found'
+        return result
     }
 
 
     async updateProduct(id) {
+        const productTXT = await fs.readFile(this.path, 'utf-8')
+        this.products = JSON.parse(productTXT)
+
+        const productByid = this.products.find((ele) => ele.id === id)
+        productByid !== undefined
+        ? productByid.stock--
+        : console.log('Product not found')
+        
+        await fs.writeFile(this.path, JSON.stringify(this.products))
     }
 
     async deleteProduct(id) {
+        const productTXT = await fs.readFile(this.path, 'utf-8')
+        this.products = JSON.parse(productTXT)
+
+        const filteredProducts = this.products. filter((ele) => ele.id !== id)
+        this.products = filteredProducts
+
+        await fs.writeFile(this.path, JSON.stringify(this.products))
     }
 }
 
